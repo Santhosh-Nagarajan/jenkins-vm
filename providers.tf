@@ -4,5 +4,5 @@ provider "google" {
 
   region = var.region
 
-  credentials = file("~/COMPUTE-ENGINE/${var.credential}")
+  credentials = file("~/${var.credential}")
 }
