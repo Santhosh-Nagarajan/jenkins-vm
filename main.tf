@@ -1,4 +1,4 @@
-resource "google_compute_instance" "jenkins_vm" {
+resource "google_compute_instance" "example" {
   name         = var.instance-name
   machine_type = var.machine-type
   zone         = "<your-zone>"
@@ -14,7 +14,7 @@ resource "google_compute_instance" "jenkins_vm" {
   }
 
   network_interface {
-    network                 = var.network
+    network    = var.network
     subnetwork = false
   }
 
@@ -22,21 +22,21 @@ resource "google_compute_instance" "jenkins_vm" {
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = google_compute_instance.jenkins_vm.name
+    email  = "label-471@playground-s-11-deec77ca.iam.gserviceaccount.com"
     scopes = ["cloud-platform"]
   }
 }
 resource "google_compute_subnetwork" "my_subnet" {
-    name          = var.subnet-name
-    network       = google_compute_instance.jenkins_vm.network_interface
-    ip_cidr_range = "10.0.0.0/24"
-    region        = var.region
-  }
+  name          = var.subnet-name
+  network       = google_compute_instance.example.id
+  ip_cidr_range = "10.0.0.0/24"
+  region        = var.region
+}
 
 # Create HTTP firewall rule
 resource "google_compute_firewall" "http_firewall" {
   name    = "http-firewall"
-  network = google_compute_instance.jenkins_vm.network_interface
+  network = google_compute_instance.example.self_link
 
   allow {
     protocol = "tcp"
@@ -49,7 +49,7 @@ resource "google_compute_firewall" "http_firewall" {
 # Create SSH firewall rule
 resource "google_compute_firewall" "ssh_firewall" {
   name    = "ssh-firewall"
-  network = google_compute_instance.jenkins_vm.network_interface
+  network = google_compute_instance.example.id
 
   allow {
     protocol = "tcp"

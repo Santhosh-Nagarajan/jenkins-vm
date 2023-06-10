@@ -1,7 +1,7 @@
 output "instance-id" {
-  value = google_compute_instance.jenkins_vm.instance_id
+  value = google_compute_instance.example.instance_id
 }
 
 output "public-ip" {
-  value = google_compute_instance.jenkins_vm.hostname
+  value = google_compute_instance.example.hostname
 }

@@ -25,7 +25,7 @@ variable "machine-type" {
 
 
 variable "size" {
-  type        = string
+  type        = number
   description = "Enter Your Size"
 }
 
